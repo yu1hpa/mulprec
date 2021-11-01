@@ -156,3 +156,41 @@ int add(struct Number *a, struct Number *b, struct Number *c){
     if (e != 0) return -1;
     else return 0;
 }
+
+int sub(struct Number *a, struct Number *b, struct Number *c){
+    //桁借り
+    int h = 0;
+
+    if(a->sign == 1 && b->sign == -1) {
+        struct Number d; clearByZero(&d);
+        getAbs(b, &d);
+        if(add(a, &d, c) != 0) return -1;
+    } else if (a->sign == -1 && b->sign == 1) {
+        struct Number d; clearByZero(&d);
+        getAbs(a, &d);
+        if(add(b, &d, c) != 0) return -1;
+    } else if (a->sign == -1 && b->sign == -1) {
+        struct Number d, e; clearByZero(&d); clearByZero(&e);
+        getAbs(a, &d); getAbs(b, &e);
+        sub(&e, &d, c);
+    }
+    else {
+        if(numComp(a, b) == 1){
+            for(int i = 0; i < KETA; i++){
+                if(a->n[i] - h >= b->n[i]) {
+                    c->n[i] = (a->n[i] - h) - b->n[i];
+                    h = 0;
+                } else {
+                    c->n[i] = 10 + (a->n[i] - h) - b->n[i];
+                    h = 1;
+                }
+            }
+        } else {
+            struct Number d; clearByZero(&d);
+            sub(b, a, &d);
+            d.sign = -1;
+            copyNumber(&d, c);
+        }
+    }
+    return 0;
+}
