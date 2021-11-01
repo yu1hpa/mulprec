@@ -60,3 +60,13 @@ int isZero(struct Number *a){
     }
     return 0;
 }
+
+int mulBy10(struct Number *a, struct Number *b){
+    if (a->n[KETA - 1] != 0) return -1;
+    for(int keta = 0; keta < KETA; keta++){
+        b->n[keta+1] = a->n[keta];
+    }
+    b->n[0] = 0;
+    b->sign = a->sign;
+    return 0;
+}
