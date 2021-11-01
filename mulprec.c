@@ -111,3 +111,21 @@ int getSign(struct Number *a){
     if (a->sign == 1) return 1;
     else return -1;
 }
+
+int numComp(struct Number *a, struct Number *b){
+    if (a->sign > b->sign) return 1;
+    else if (a->sign < b->sign) return -1;
+    else if (a->sign == 1 && b->sign == 1) {
+        for (int keta = KETA - 1; keta >= 0; keta--) {
+            if (a->n[keta] > b->n[keta]) return 1;
+            else if (a->n[keta] < b->n[keta]) return -1;
+        }
+    }
+    else if (a->sign == -1 && b->sign == -1) {
+        for (int keta = KETA - 1; keta >= 0; keta--) {
+            if (a->n[keta] < b->n[keta]) return 1;
+            else if (a->n[keta] > b->n[keta]) return -1;
+        }
+    }
+    return 0;
+}
