@@ -106,3 +106,8 @@ int setSign(struct Number *a, int s){
     }
     return 0;
 }
+
+int getSign(struct Number *a){
+    if (a->sign == 1) return 1;
+    else return -1;
+}
