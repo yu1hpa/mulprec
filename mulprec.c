@@ -70,3 +70,12 @@ int mulBy10(struct Number *a, struct Number *b){
     b->sign = a->sign;
     return 0;
 }
+
+int divBy10(struct Number *a, struct Number *b){
+    for(int keta = 0; keta < KETA; keta++){
+        b->n[keta] = a->n[keta+1];
+    }
+    b->n[KETA-1] = 0;
+    b->sign = a->sign;
+    return a->n[0];
+}
