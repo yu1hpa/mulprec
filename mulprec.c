@@ -50,3 +50,13 @@ void getAbs(struct Number *a, struct Number *b){
     *b = *a;
     b->sign = 1;
 }
+
+int isZero(struct Number *a){
+    for(int keta = KETA - 1; keta >= 0; keta--){
+        if(a->n[keta] != 0){
+            return -1;
+            break;
+        }
+    }
+    return 0;
+}
