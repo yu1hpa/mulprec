@@ -17,3 +17,11 @@ void clearByZero(struct Number *a){
 void putSign(struct Number *a){
     a->sign != 1? printf("-") : printf("+");
 }
+
+void setRnd(struct Number *a, int k){
+    if (k > KETA) exit(0);
+    for (int i = k-1; i >= 0; i--){
+        int rndnum = random()%10;
+        a->n[i] = rndnum;
+    }
+}
