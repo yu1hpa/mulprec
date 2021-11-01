@@ -129,3 +129,30 @@ int numComp(struct Number *a, struct Number *b){
     }
     return 0;
 }
+
+int add(struct Number *a, struct Number *b, struct Number *c){
+    int d, e = 0;
+
+    if (a->sign == 1 && b->sign == -1) {
+        struct Number d; clearByZero(&d);
+        getAbs(b, &d);
+        sub(a, &d, c);
+    } else if (a->sign == -1 && b->sign == 1) {
+        struct Number d; clearByZero(&d);
+        getAbs(a, &d);
+        sub(b, &d, c);
+    } else if (a->sign == -1 && b->sign == -1) {
+        struct Number d, e; clearByZero(&d); clearByZero(&e);
+        getAbs(a, &d); getAbs(b, &e);
+        add(&d, &e, c);
+        setSign(c, -1);
+    } else {
+        for (int keta = 0; keta < KETA; keta++){
+            d = a->n[keta] + b->n[keta] + e;
+            c->n[keta]  = d % 10;
+            e = (d - c->n[keta])/10;
+        }
+    }
+    if (e != 0) return -1;
+    else return 0;
+}
