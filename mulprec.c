@@ -10,3 +10,10 @@ void clearByZero(struct Number *a){
     a->sign = 1;
 }
 
+/*
+ * もし、signが1なら+ を先頭に表示
+ *            -1なら- を先頭に表示
+ */
+void putSign(struct Number *a){
+    a->sign != 1? printf("-") : printf("+");
+}
