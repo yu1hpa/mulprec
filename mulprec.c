@@ -79,3 +79,18 @@ int divBy10(struct Number *a, struct Number *b){
     b->sign = a->sign;
     return a->n[0];
 }
+
+int setInt(struct Number *a, int x){
+    int i, m;
+    if (x < 0) {
+        a->sign = -1;
+        x = -x;
+    }
+    for(i = 0; i < KETA; i++){
+        m = x % 10;
+        a->n[i] = m;
+        x = (x - m) / 10;
+    }
+    if (x != 0) return -1;
+    else return 0;
+}
