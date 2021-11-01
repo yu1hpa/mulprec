@@ -25,3 +25,11 @@ void setRnd(struct Number *a, int k){
         a->n[i] = rndnum;
     }
 }
+
+void dispNumber(struct Number *a) {
+    putSign(a);
+    for (int i = KETA - 1; i >= 0; i--) {
+        printf("%2d", a->n[i]);
+    }
+    puts("");
+}
