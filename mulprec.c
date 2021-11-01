@@ -45,3 +45,8 @@ void dispNumberZeroSuppress(struct Number *a){
 void copyNumber(struct Number *a, struct Number *b){
     *b = *a;
 }
+
+void getAbs(struct Number *a, struct Number *b){
+    *b = *a;
+    b->sign = 1;
+}
