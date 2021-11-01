@@ -41,3 +41,7 @@ void dispNumberZeroSuppress(struct Number *a){
     }
     puts("");
 }
+
+void copyNumber(struct Number *a, struct Number *b){
+    *b = *a;
+}
