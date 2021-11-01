@@ -33,3 +33,11 @@ void dispNumber(struct Number *a) {
     }
     puts("");
 }
+
+void dispNumberZeroSuppress(struct Number *a){
+    putSign(a);
+   for (int i = KETA - 1; i >= 0; i--){
+        if(a->n[i] != 0) printf("%2d", a->n[i]);
+    }
+    puts("");
+}
