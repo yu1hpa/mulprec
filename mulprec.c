@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include<limits.h>
 #include "mulprec.h"
 
 void clearByZero(struct Number *a){
@@ -191,6 +192,19 @@ int sub(struct Number *a, struct Number *b, struct Number *c){
             d.sign = -1;
             copyNumber(&d, c);
         }
+    }
+    return 0;
+}
+
+int simpleMultiple(int a, int b, int *c){
+    int cnt = 0;
+    while(1){
+        int w = INT_MAX - a;
+        if (w < *c) return -1;
+        *c += a;
+        printf("%d\n", *c);
+        if (cnt >= b) break;
+        cnt++;
     }
     return 0;
 }
