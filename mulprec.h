@@ -21,3 +21,4 @@ int getSign(struct Number *);
 int numComp(struct Number *, struct Number *);
 int add(struct Number *, struct Number *, struct Number *);
 int sub(struct Number *, struct Number *, struct Number *);
+int simpleMultiple(int, int, int *);
