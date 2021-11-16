@@ -101,14 +101,12 @@ int setInt(struct Number *a, int x){
 }
 
 int setSign(struct Number *a, int s){
-    if (a->n[0] != 0){
+    if (isZero(a) == -1){
         if (s == -1) a->sign = -1;
         else if (s == 1) a->sign = 1;
         else return -1;
-    } else {
-        a->sign = 1;
-        return 0;
-    }
+    } else a->sign = 1;
+
     return 0;
 }
 
