@@ -12,5 +12,6 @@ int mulprec2Num(struct Number *a){
         }
         num += tmp;
     }
-    return num;
+    if (getSign(a) == -1) return -num;
+    else return num;
 }
