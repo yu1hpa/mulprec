@@ -208,3 +208,22 @@ int simpleMultiple(int a, int b, int *c){
     }
     return 0;
 }
+
+int multiple(struct Number *a, struct Number *b, struct Number *c){
+    struct Number d, e; clearByZero(&d); clearByZero(&e);
+    int h = 0;
+    for (int i = 0; i < KETA - 1; i++){
+        for (int j = 0; j < KETA - 1; j++){
+            e.n[j] = (a->n[j] * b->n[i] + h) % 10;
+            h = (a->n[j] * b->n[i] + h) / 10;
+        }
+        for(int k = i; k > 0; k--){
+            mulBy10(&e, &d);
+            copyNumber(&d, &e);
+        }
+        if (i == 0) copyNumber(&e, &d);
+        add(&d, c, c);
+    }
+    if (h != 0) return -1;
+    return 0;
+}
