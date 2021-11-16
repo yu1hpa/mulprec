@@ -212,6 +212,25 @@ int simpleMultiple(int a, int b, int *c){
 }
 
 int multiple(struct Number *a, struct Number *b, struct Number *c){
+    if (getSign(a) == 1 && getSign(b) == -1) {
+        struct Number d; clearByZero(&d);
+        getAbs(b, &d);
+        multiple(a, &d, c);
+        setSign(c, -1);
+        return 0;
+    } else if (getSign(a) == -1 && getSign(b) == 1) {
+        struct Number d; clearByZero(&d);
+        getAbs(a, &d);
+        multiple(b, &d, c);
+        setSign(c, -1);
+        return 0;
+    } else if (getSign(a) == -1 && getSign(b) == -1) {
+        struct Number d, e; clearByZero(&d); clearByZero(&e);
+        getAbs(a, &d);
+        getAbs(b, &e);
+        multiple(&d, &e, c);
+        return 0;
+    }
     struct Number d, e; clearByZero(&d); clearByZero(&e);
     int h = 0;
     for (int i = 0; i < KETA - 1; i++){
