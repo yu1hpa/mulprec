@@ -25,6 +25,10 @@ void setRnd(struct Number *a, int k){
         int rndnum = random()%10;
         a->n[i] = rndnum;
     }
+    // 下一桁が2で割り切れたら+にセット
+    // 割り切れなければ-にセット
+    if (a->n[0] % 2 == 0) a->sign = 1;
+    else a-> sign = -1;
 }
 
 void dispNumber(struct Number *a) {
