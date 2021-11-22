@@ -2,7 +2,7 @@
 #include"mulprec.h"
 int mulprec2Num(struct Number *a){
     int num, tmp = 0;
-    for(int i = 0; i < KETA - 1; i++){
+    for(int i = 0; i < KETA; i++){
         if (i == 0) num = a->n[i];
         else {
             tmp = a->n[i];
