@@ -239,3 +239,11 @@ int multiple(struct Number *a, struct Number *b, struct Number *c){
     if (h != 0) return -1;
     return 0;
 }
+
+int increment(struct Number *a, struct Number *b){
+    struct Number one; clearByZero(&one);
+    int r;
+    setInt(&one, 1);
+    r = add(a, &one, b);
+    return r;
+}
