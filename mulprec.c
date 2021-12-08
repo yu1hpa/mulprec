@@ -247,3 +247,42 @@ int increment(struct Number *a, struct Number *b){
     r = add(a, &one, b);
     return r;
 }
+
+int divide(struct Number *a, struct Number *b, struct Number *c, struct Number *d){
+    struct Number n, m; clearByZero(&n); clearByZero(&m);
+    copyNumber(a, &n);
+    if (getSign(a) == 1 && getSign(b) == -1) {
+        struct Number p; clearByZero(&p);
+        getAbs(b, &p);
+        divide(a, &p, c, d);
+        setSign(c, -1);
+        return 0;
+    } else if (getSign(a) == -1 && getSign(b) == 1) {
+        struct Number p; clearByZero(&p);
+        getAbs(a, &p);
+        divide(&p, b, c, d);
+        setSign(c, -1);
+        setSign(d, -1);
+        return 0;
+    } else if (getSign(a) == -1 && getSign(b) == -1) {
+        struct Number p, q; clearByZero(&p); clearByZero(&q);
+        getAbs(a, &p);
+        getAbs(b, &q);
+        divide(&p, &q, c, d);
+        setSign(d, -1);
+        return 0;
+    }
+    if (!isZero(b)) return -1;
+    while(1) {
+        if(numComp(&n, b) == -1) break;
+        // n - b = m
+        sub(&n, b, &m);
+        copyNumber(&m, &n);
+
+        clearByZero(&m);
+        increment(c, &m);
+        copyNumber(&m, c);
+    }
+    copyNumber(&n, d);
+    return 0;
+}
