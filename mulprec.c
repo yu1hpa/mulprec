@@ -168,17 +168,21 @@ int sub(struct Number *a, struct Number *b, struct Number *c){
         struct Number d; clearByZero(&d);
         getAbs(b, &d);
         if(add(a, &d, c) != 0) return -1;
+        return 0;
     } else if (a->sign == -1 && b->sign == 1) {
         struct Number d; clearByZero(&d);
         getAbs(a, &d);
         if(add(b, &d, c) != 0) return -1;
+        setSign(c, -1);
+        return 0;
     } else if (a->sign == -1 && b->sign == -1) {
         struct Number d, e; clearByZero(&d); clearByZero(&e);
         getAbs(a, &d); getAbs(b, &e);
         sub(&e, &d, c);
+        return 0;
     }
     else {
-        if(numComp(a, b) == 1){
+        if(numComp(a, b) == 1 || numComp(a, b) == 0){
             for(int i = 0; i < KETA; i++){
                 if(a->n[i] - h >= b->n[i]) {
                     c->n[i] = (a->n[i] - h) - b->n[i];
