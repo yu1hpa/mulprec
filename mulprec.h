@@ -1,4 +1,4 @@
-#define KETA 10
+#define KETA 40
 
 struct Number {
     int n[KETA];
@@ -23,3 +23,4 @@ int add(struct Number *, struct Number *, struct Number *);
 int sub(struct Number *, struct Number *, struct Number *);
 int simpleMultiple(int, int, int *);
 int multiple(struct Number *, struct Number *, struct Number *);
+int divide(struct Number *, struct Number *, struct Number *, struct Number *);
