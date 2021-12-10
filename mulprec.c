@@ -4,6 +4,7 @@
 #include<limits.h>
 #include "mulprec.h"
 
+// 配列をゼロで初期化
 void clearByZero(struct Number *a){
     for (int i = 0; i < KETA; i++){
         a->n[i] = 0;
@@ -19,6 +20,7 @@ void putSign(struct Number *a){
     a->sign != 1? printf("-") : printf("+");
 }
 
+// ランダムに値を生成して配列にセット
 void setRnd(struct Number *a, int k){
     if (k > KETA) exit(0);
     for (int i = k-1; i >= 0; i--){
@@ -31,6 +33,7 @@ void setRnd(struct Number *a, int k){
     else a-> sign = -1;
 }
 
+// 配列を表示
 void dispNumber(struct Number *a) {
     putSign(a);
     for (int i = KETA - 1; i >= 0; i--) {
@@ -47,15 +50,28 @@ void dispNumberZeroSuppress(struct Number *a){
     puts("");
 }
 
+/*
+ * copyNumber(a, b)
+ * 第一引数を第二引数にコピー
+ * */
 void copyNumber(struct Number *a, struct Number *b){
     *b = *a;
 }
 
+/*
+ * 第一引数の絶対値を取って
+ * 第二引数のポインタにコピーする
+ */
 void getAbs(struct Number *a, struct Number *b){
     *b = *a;
     b->sign = 1;
 }
 
+/*
+ * ポインタのデータがゼロかどうか
+ * ゼロでなければ 0
+ * そうでなければ -1
+ */
 int isZero(struct Number *a){
     for(int keta = KETA - 1; keta >= 0; keta--){
         if(a->n[keta] != 0){
@@ -66,6 +82,10 @@ int isZero(struct Number *a){
     return 0;
 }
 
+/*
+ * 第一引数で受け取ったものを
+ * 10倍したものを格納した配列を第二引数で返す
+ */
 int mulBy10(struct Number *a, struct Number *b){
     if (a->n[KETA - 1] != 0) return -1;
     for(int keta = 0; keta < KETA; keta++){
@@ -76,6 +96,10 @@ int mulBy10(struct Number *a, struct Number *b){
     return 0;
 }
 
+/*
+ * 第一引数で受け取ったものを
+ * 1/10 倍したものを格納した配列を第二引数で返す
+ */
 int divBy10(struct Number *a, struct Number *b){
     for(int keta = 0; keta < KETA; keta++){
         b->n[keta] = a->n[keta+1];
@@ -85,6 +109,9 @@ int divBy10(struct Number *a, struct Number *b){
     return a->n[0];
 }
 
+/*
+ * 配列に任意の値を格納する
+ */
 int setInt(struct Number *a, int x){
     int i, m;
     if (x < 0) {
@@ -100,6 +127,9 @@ int setInt(struct Number *a, int x){
     else return 0;
 }
 
+/*
+ * 任意の配列に、任意の符号をセットする
+ */
 int setSign(struct Number *a, int s){
     if (isZero(a) == -1){
         if (s == -1) a->sign = -1;
@@ -110,11 +140,19 @@ int setSign(struct Number *a, int s){
     return 0;
 }
 
+/*
+ * 配列の符号を取得する
+ */
 int getSign(struct Number *a){
     if (a->sign == 1) return 1;
     else return -1;
 }
 
+/*
+ * a == b -> 0
+ * a > b  -> 1
+ * a < b  -> -1
+ * */
 int numComp(struct Number *a, struct Number *b){
     if (a->sign > b->sign) return 1;
     else if (a->sign < b->sign) return -1;
@@ -133,6 +171,9 @@ int numComp(struct Number *a, struct Number *b){
     return 0;
 }
 
+/*
+ * a + b = c
+ */
 int add(struct Number *a, struct Number *b, struct Number *c){
     int d, e = 0;
 
@@ -160,6 +201,9 @@ int add(struct Number *a, struct Number *b, struct Number *c){
     else return 0;
 }
 
+/*
+ * a - b = c
+ * */
 int sub(struct Number *a, struct Number *b, struct Number *c){
     //桁借り
     int h = 0;
@@ -202,6 +246,9 @@ int sub(struct Number *a, struct Number *b, struct Number *c){
     return 0;
 }
 
+/*
+ * a * b = c
+ */
 int multiple(struct Number *a, struct Number *b, struct Number *c){
     if (getSign(a) == 1 && getSign(b) == -1) {
         struct Number d; clearByZero(&d);
@@ -240,6 +287,9 @@ int multiple(struct Number *a, struct Number *b, struct Number *c){
     return 0;
 }
 
+/*
+ * a + 1 = b
+ */
 int increment(struct Number *a, struct Number *b){
     struct Number one; clearByZero(&one);
     int r;
@@ -248,6 +298,9 @@ int increment(struct Number *a, struct Number *b){
     return r;
 }
 
+/*
+ * a / b = c...d
+ */
 int divide(struct Number *a, struct Number *b, struct Number *c, struct Number *d){
     struct Number n, m; clearByZero(&n); clearByZero(&m);
     copyNumber(a, &n);
