@@ -4,4 +4,3 @@
 
 . ./test-unittests.sh
 
-. ./test-post.sh
