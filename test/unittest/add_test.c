@@ -6,10 +6,6 @@
 #include<assert.h>
 #include<time.h>
 
-//桁数
-#define ten 10000000000
-#define fif 1000000000000000
-
 #define NUM RAND_MAX
 
 void init(struct Number *a, struct Number *b, struct Number *c){
@@ -32,9 +28,9 @@ int main(int argc, char **argv){
         genRandom(&aRnd, &bRnd);
         setInt(&a, aRnd);
         setInt(&b, bRnd);
-        multiple(&a, &b, &c);
+        add(&a, &b, &c);
         c_i = mulprec2Num(&c);
-        assert(c_i == (aRnd * bRnd));
+        assert(c_i == (aRnd + bRnd));
     }
 
     for (int i = 0; i < TEST_COUNT; i++){
@@ -44,9 +40,9 @@ int main(int argc, char **argv){
         int mbRnd = -bRnd;
         setInt(&a, maRnd);
         setInt(&b, mbRnd);
-        multiple(&a, &b, &c);
+        add(&a, &b, &c);
         c_i = mulprec2Num(&c);
-        assert(c_i == (maRnd * mbRnd));
+        assert(c_i == (maRnd + mbRnd));
     }
 
     for (int i = 0; i < TEST_COUNT; i++){
@@ -55,9 +51,9 @@ int main(int argc, char **argv){
         int maRnd = -aRnd;
         setInt(&a, maRnd);
         setInt(&b, bRnd);
-        multiple(&a, &b, &c);
+        add(&a, &b, &c);
         c_i = mulprec2Num(&c);
-        assert(c_i == (maRnd * bRnd));
+        assert(c_i == (maRnd + bRnd));
     }
 
     for (int i = 0; i < TEST_COUNT; i++){
@@ -66,8 +62,8 @@ int main(int argc, char **argv){
         int mbRnd = -bRnd;
         setInt(&a, aRnd);
         setInt(&b, mbRnd);
-        multiple(&a, &b, &c);
+        add(&a, &b, &c);
         c_i = mulprec2Num(&c);
-        assert(c_i == (aRnd * mbRnd));
+        assert(c_i == (aRnd + mbRnd));
     }
 }

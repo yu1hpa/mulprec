@@ -12,10 +12,11 @@
 
 #define NUM RAND_MAX
 
-void init(struct Number *a, struct Number *b, struct Number *c){
+void init(struct Number *a, struct Number *b, struct Number *c, struct Number *d){
     clearByZero(a);
     clearByZero(b);
     clearByZero(c);
+    clearByZero(d);
 }
 
 void genRandom(int *aRnd, int *bRnd){
@@ -25,49 +26,57 @@ void genRandom(int *aRnd, int *bRnd){
 
 int main(int argc, char **argv){
     srandom(time(NULL));
-    struct Number a, b, c;
-    int aRnd = 0; int bRnd = 0; int c_i = 0;
+    struct Number a, b, c, d;
+    int aRnd = 0; int bRnd = 0; int c_i = 0; int d_i = 0;
     for (int i = 0; i < TEST_COUNT; i++){
-        init(&a, &b, &c);
+        init(&a, &b, &c, &d);
         genRandom(&aRnd, &bRnd);
         setInt(&a, aRnd);
         setInt(&b, bRnd);
-        multiple(&a, &b, &c);
+        divide(&a, &b, &c, &d);
         c_i = mulprec2Num(&c);
-        assert(c_i == (aRnd * bRnd));
+        d_i = mulprec2Num(&d);
+        assert(c_i == (aRnd / bRnd));
+        assert(d_i == (aRnd % bRnd));
     }
 
     for (int i = 0; i < TEST_COUNT; i++){
-        init(&a, &b, &c);
+        init(&a, &b, &c, &d);
         genRandom(&aRnd, &bRnd);
         int maRnd = -aRnd;
         int mbRnd = -bRnd;
         setInt(&a, maRnd);
         setInt(&b, mbRnd);
-        multiple(&a, &b, &c);
+        divide(&a, &b, &c, &d);
         c_i = mulprec2Num(&c);
-        assert(c_i == (maRnd * mbRnd));
+        d_i = mulprec2Num(&d);
+        assert(c_i == (maRnd / mbRnd));
+        assert(d_i == (maRnd % mbRnd));
     }
 
     for (int i = 0; i < TEST_COUNT; i++){
-        init(&a, &b, &c);
+        init(&a, &b, &c, &d);
         genRandom(&aRnd, &bRnd);
         int maRnd = -aRnd;
         setInt(&a, maRnd);
         setInt(&b, bRnd);
-        multiple(&a, &b, &c);
+        divide(&a, &b, &c, &d);
         c_i = mulprec2Num(&c);
-        assert(c_i == (maRnd * bRnd));
+        d_i = mulprec2Num(&d);
+        assert(c_i == (maRnd / bRnd));
+        assert(d_i == (maRnd % bRnd));
     }
 
     for (int i = 0; i < TEST_COUNT; i++){
-        init(&a, &b, &c);
+        init(&a, &b, &c, &d);
         genRandom(&aRnd, &bRnd);
         int mbRnd = -bRnd;
         setInt(&a, aRnd);
         setInt(&b, mbRnd);
-        multiple(&a, &b, &c);
+        divide(&a, &b, &c, &d);
         c_i = mulprec2Num(&c);
-        assert(c_i == (aRnd * mbRnd));
+        d_i = mulprec2Num(&d);
+        assert(c_i == (aRnd / mbRnd));
+        assert(d_i == (aRnd % mbRnd));
     }
 }
