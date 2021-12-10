@@ -4,15 +4,24 @@
 
 $ECHO "$BLUE[*] Execution Unit-Tests $GREY"
 
-make -C .. unittest
-time ./a.out 2> test-comp.log | 2> /dev/null 2>&1
-rm a.out
-test -e test-comp.log && {
-    grep -E 'Assertion failed' test-comp.log > /dev/null 2>&1 && {
-        $ECHO "$RED[!] Failed"
-        CODE=1
-    }
-}
-rm test-comp.log
+FUNCTION="add"
+make $FUNCTION
+./${FUNCTION}_test
+. ./test-check.sh
 
-. ./test-post.sh
+FUNCTION="sub"
+make $FUNCTION
+./${FUNCTION}_test
+. ./test-check.sh
+
+FUNCTION="multiple"
+make $FUNCTION
+./${FUNCTION}_test
+. ./test-check.sh
+
+FUNCTION="divide"
+make $FUNCTION
+./${FUNCTION}_test
+. ./test-check.sh
+
+rm *_test
