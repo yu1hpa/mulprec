@@ -370,3 +370,40 @@ int power(struct Number *a, struct Number *b, struct Number *c){
     }
     return 0;
 }
+
+int fastpower(struct Number *a, struct Number *b, struct Number *c){
+    struct Number one; clearByZero(&one);
+    setInt(&one, 1);
+    setInt(c, 1);
+
+    if (!isZero(b)) {
+        return 0;
+    }
+    if (numComp(b, &one) == 0){
+        copyNumber(a, c);
+        return 0;
+    }
+
+    struct Number x, y, z, w;
+    clearByZero(&x); clearByZero(&y); clearByZero(&z); clearByZero(&w);
+    copyNumber(b, &x);
+    setInt(&y, 2);
+    divide(&x, &y, &z, &w);
+    //剰余が0ならば
+    if (!isZero(&w)) {
+        struct Number m; clearByZero(&m);
+        multiple(a, a, &m);
+        fastpower(&m, &z, c);
+        return 0;
+    }
+    struct Number s, n, m;
+    clearByZero(&s); clearByZero(&n); clearByZero(&m);
+
+    sub(b, &one, &s);
+    fastpower(a, &s, &n);
+
+    multiple(a, &n, &m);
+    copyNumber(&m, c);
+
+    return 0;
+}
