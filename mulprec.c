@@ -181,15 +181,18 @@ int add(struct Number *a, struct Number *b, struct Number *c){
         struct Number d; clearByZero(&d);
         getAbs(b, &d);
         sub(a, &d, c);
+        return 0;
     } else if (a->sign == -1 && b->sign == 1) {
         struct Number d; clearByZero(&d);
         getAbs(a, &d);
         sub(b, &d, c);
+        return 0;
     } else if (a->sign == -1 && b->sign == -1) {
         struct Number d, e; clearByZero(&d); clearByZero(&e);
         getAbs(a, &d); getAbs(b, &e);
         add(&d, &e, c);
         setSign(c, -1);
+        return 0;
     } else {
         for (int keta = 0; keta < KETA; keta++){
             d = a->n[keta] + b->n[keta] + e;
