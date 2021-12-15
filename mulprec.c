@@ -346,3 +346,27 @@ int divide(struct Number *a, struct Number *b, struct Number *c, struct Number *
     copyNumber(&n, d);
     return 0;
 }
+
+int power(struct Number *a, struct Number *b, struct Number *c){
+    struct Number d, e, f;
+    clearByZero(&d); clearByZero(&e); clearByZero(&f);
+    struct Number one; clearByZero(&one);
+    setInt(&one, 1);
+    setInt(c, 1);
+    if(!isZero(b)) {
+        return 0;
+    }
+    if (numComp(b, &one) == 0) {
+        copyNumber(a, c);
+        return 0;
+    }
+    while (1){
+        multiple(c, a, &e);
+        copyNumber(&e, c);
+
+        increment(&d, &f);
+        copyNumber(&f, &d);
+        if(numComp(b, &d) == 0) break;
+    }
+    return 0;
+}
