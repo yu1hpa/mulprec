@@ -23,4 +23,7 @@ int add(struct Number *, struct Number *, struct Number *);
 int sub(struct Number *, struct Number *, struct Number *);
 int simpleMultiple(int, int, int *);
 int multiple(struct Number *, struct Number *, struct Number *);
+int increment(struct Number *, struct Number *);
 int divide(struct Number *, struct Number *, struct Number *, struct Number *);
+int power(struct Number *, struct Number *, struct Number *);
+int fastpower(struct Number *, struct Number *, struct Number *);

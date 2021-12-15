@@ -181,15 +181,18 @@ int add(struct Number *a, struct Number *b, struct Number *c){
         struct Number d; clearByZero(&d);
         getAbs(b, &d);
         sub(a, &d, c);
+        return 0;
     } else if (a->sign == -1 && b->sign == 1) {
         struct Number d; clearByZero(&d);
         getAbs(a, &d);
         sub(b, &d, c);
+        return 0;
     } else if (a->sign == -1 && b->sign == -1) {
         struct Number d, e; clearByZero(&d); clearByZero(&e);
         getAbs(a, &d); getAbs(b, &e);
         add(&d, &e, c);
         setSign(c, -1);
+        return 0;
     } else {
         for (int keta = 0; keta < KETA; keta++){
             d = a->n[keta] + b->n[keta] + e;
@@ -270,8 +273,10 @@ int multiple(struct Number *a, struct Number *b, struct Number *c){
         return 0;
     }
     struct Number d, e; clearByZero(&d); clearByZero(&e);
+    clearByZero(c); //[NOTE]: 一つ前のcをクリアする
     int h = 0;
     for (int i = 0; i < KETA - 1; i++){
+        h = 0;
         for (int j = 0; j < KETA - 1; j++){
             e.n[j] = (a->n[j] * b->n[i] + h) % 10;
             h = (a->n[j] * b->n[i] + h) / 10;
@@ -281,7 +286,9 @@ int multiple(struct Number *a, struct Number *b, struct Number *c){
             copyNumber(&d, &e);
         }
         if (i == 0) copyNumber(&e, &d);
-        add(&d, c, c);
+        struct Number t; clearByZero(&t);
+        add(&d, c, &t);
+        copyNumber(&t, c);
     }
     if (h != 0) return -1;
     return 0;
@@ -337,5 +344,66 @@ int divide(struct Number *a, struct Number *b, struct Number *c, struct Number *
         copyNumber(&m, c);
     }
     copyNumber(&n, d);
+    return 0;
+}
+
+int power(struct Number *a, struct Number *b, struct Number *c){
+    struct Number d, e, f;
+    clearByZero(&d); clearByZero(&e); clearByZero(&f);
+    struct Number one; clearByZero(&one);
+    setInt(&one, 1);
+    setInt(c, 1);
+    if(!isZero(b)) {
+        return 0;
+    }
+    if (numComp(b, &one) == 0) {
+        copyNumber(a, c);
+        return 0;
+    }
+    while (1){
+        multiple(c, a, &e);
+        copyNumber(&e, c);
+
+        increment(&d, &f);
+        copyNumber(&f, &d);
+        if(numComp(b, &d) == 0) break;
+    }
+    return 0;
+}
+
+int fastpower(struct Number *a, struct Number *b, struct Number *c){
+    struct Number one; clearByZero(&one);
+    setInt(&one, 1);
+    setInt(c, 1);
+
+    if (!isZero(b)) {
+        return 0;
+    }
+    if (numComp(b, &one) == 0){
+        copyNumber(a, c);
+        return 0;
+    }
+
+    struct Number x, y, z, w;
+    clearByZero(&x); clearByZero(&y); clearByZero(&z); clearByZero(&w);
+    copyNumber(b, &x);
+    setInt(&y, 2);
+    divide(&x, &y, &z, &w);
+    //剰余が0ならば
+    if (!isZero(&w)) {
+        struct Number m; clearByZero(&m);
+        multiple(a, a, &m);
+        fastpower(&m, &z, c);
+        return 0;
+    }
+    struct Number s, n, m;
+    clearByZero(&s); clearByZero(&n); clearByZero(&m);
+
+    sub(b, &one, &s);
+    fastpower(a, &s, &n);
+
+    multiple(a, &n, &m);
+    copyNumber(&m, c);
+
     return 0;
 }
