@@ -2,26 +2,18 @@
 
 . ./test-pre.sh
 
+function f(){
+    for ut in ${unittests[@]}
+    do
+        make $ut
+        FUNCTION=$ut
+        ./${FUNCTION}_test
+        . ./test-check.sh
+    done
+}
+
 $ECHO "$BLUE[*] Execution Unit-Tests $GREY"
 
-FUNCTION="add"
-make $FUNCTION
-./${FUNCTION}_test
-. ./test-check.sh
-
-FUNCTION="sub"
-make $FUNCTION
-./${FUNCTION}_test
-. ./test-check.sh
-
-FUNCTION="multiple"
-make $FUNCTION
-./${FUNCTION}_test
-. ./test-check.sh
-
-FUNCTION="divide"
-make $FUNCTION
-./${FUNCTION}_test
-. ./test-check.sh
-
+unittests=("add" "sub" "multiple" "divide" "power" "fastpower")
+f unittests
 rm *_test
