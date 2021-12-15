@@ -273,8 +273,10 @@ int multiple(struct Number *a, struct Number *b, struct Number *c){
         return 0;
     }
     struct Number d, e; clearByZero(&d); clearByZero(&e);
+    clearByZero(c); //[NOTE]: 一つ前のcをクリアする
     int h = 0;
     for (int i = 0; i < KETA - 1; i++){
+        h = 0;
         for (int j = 0; j < KETA - 1; j++){
             e.n[j] = (a->n[j] * b->n[i] + h) % 10;
             h = (a->n[j] * b->n[i] + h) / 10;
@@ -284,7 +286,9 @@ int multiple(struct Number *a, struct Number *b, struct Number *c){
             copyNumber(&d, &e);
         }
         if (i == 0) copyNumber(&e, &d);
-        add(&d, c, c);
+        struct Number t; clearByZero(&t);
+        add(&d, c, &t);
+        copyNumber(&t, c);
     }
     if (h != 0) return -1;
     return 0;
