@@ -1,3 +1,5 @@
+COMPILER=gcc
+CFLAGS=-Wall -DPI -O2
 all:
-	gcc -Wall -o a.out pi.c mulprec.c utils.c -lm
+	$(COMPILER) $(CFLAGS) -o a.out pi.c mulprec.c -lm
 
