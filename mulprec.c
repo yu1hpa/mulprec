@@ -2,14 +2,33 @@
 #include<stdlib.h>
 #include<time.h>
 #include<limits.h>
+#include<math.h>
+#include<string.h>
 #include "mulprec.h"
+
+// 基数
+#define RADIX 1000000000
+#define RADIX_KETA (int)log10(RADIX)
+
+#define MEMO_SIZE 10000
+
+
+struct Number N1;
+struct Number N2;
+
+// グローバル変数だから0で初期化済み
+struct Number ZERO;
+
+void initNumber(){
+    clearByZero(&N1); clearByZero(&N2);
+    setInt(&N1, 1);
+    setInt(&N2, 2);
+}
 
 // 配列をゼロで初期化
 void clearByZero(struct Number *a){
-    for (int i = 0; i < KETA; i++){
-        a->n[i] = 0;
-    }
-    a->sign = 1;
+    setSign(&ZERO, 1);
+    memcpy(a, &ZERO, sizeof(ZERO));
 }
 
 /*
