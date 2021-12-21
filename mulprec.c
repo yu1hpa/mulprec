@@ -147,6 +147,16 @@ int setInt(struct Number *a, int x){
     else return 0;
 }
 
+int getInt(struct Number *a, int *x){
+    int tmp = 1;
+    for (int i = 0; i < KETA; i++){
+      *x += a->n[i] * tmp;
+      tmp *= RADIX;
+    }
+    if (getSign(a) == -1) *x *= -1;
+    return 0;
+}
+
 /*
  * 任意の配列に、任意の符号をセットする
  */
