@@ -56,15 +56,16 @@ void setRnd(struct Number *a, int k){
 void dispNumber(struct Number *a) {
     putSign(a);
     for (int i = KETA - 1; i >= 0; i--) {
-        printf("%2d", a->n[i]);
+        printf("%09llu", a->n[i]);
     }
     puts("");
 }
 
+
 void dispNumberZeroSuppress(struct Number *a){
     putSign(a);
    for (int i = KETA - 1; i >= 0; i--){
-        if(a->n[i] != 0) printf("%2d", a->n[i]);
+        if(a->n[i] != 0) printf("%09llu", a->n[i]);
     }
     puts("");
 }
@@ -138,9 +139,9 @@ int setInt(struct Number *a, int x){
         x = -x;
     }
     for(i = 0; i < KETA; i++){
-        m = x % 10;
+        m = x % RADIX;
         a->n[i] = m;
-        x = (x - m) / 10;
+        x = (x - m) / RADIX;
     }
     if (x != 0) return -1;
     else return 0;
@@ -194,7 +195,7 @@ int numComp(struct Number *a, struct Number *b){
  * a + b = c
  */
 int add(struct Number *a, struct Number *b, struct Number *c){
-    int d, e = 0;
+    uint_fast64_t d, e = 0;
 
     if (a->sign == 1 && b->sign == -1) {
         struct Number d; clearByZero(&d);
@@ -215,8 +216,8 @@ int add(struct Number *a, struct Number *b, struct Number *c){
     } else {
         for (int keta = 0; keta < KETA; keta++){
             d = a->n[keta] + b->n[keta] + e;
-            c->n[keta]  = d % 10;
-            e = (d - c->n[keta])/10;
+            c->n[keta]  = d % RADIX;
+            e = (d - c->n[keta])/RADIX;
         }
     }
     if (e != 0) return -1;
@@ -228,7 +229,7 @@ int add(struct Number *a, struct Number *b, struct Number *c){
  * */
 int sub(struct Number *a, struct Number *b, struct Number *c){
     //桁借り
-    int h = 0;
+    int_fast64_t ai, bi, h = 0;
 
     if(a->sign == 1 && b->sign == -1) {
         struct Number d; clearByZero(&d);
@@ -250,11 +251,14 @@ int sub(struct Number *a, struct Number *b, struct Number *c){
     else {
         if(numComp(a, b) == 1 || numComp(a, b) == 0){
             for(int i = 0; i < KETA; i++){
-                if(a->n[i] - h >= b->n[i]) {
-                    c->n[i] = (a->n[i] - h) - b->n[i];
+                ai = a->n[i];
+                bi = b->n[i];
+                ai = ai - h;
+                if(ai >= bi) {
+                    c->n[i] = ai - bi;
                     h = 0;
                 } else {
-                    c->n[i] = 10 + (a->n[i] - h) - b->n[i];
+                    c->n[i] = RADIX + ai - bi;
                     h = 1;
                 }
             }
@@ -293,12 +297,12 @@ int multiple(struct Number *a, struct Number *b, struct Number *c){
     }
     struct Number d, e; clearByZero(&d); clearByZero(&e);
     clearByZero(c); //[NOTE]: 一つ前のcをクリアする
-    int h = 0;
+    uint_fast64_t h = 0;
     for (int i = 0; i < KETA - 1; i++){
         h = 0;
         for (int j = 0; j < KETA - 1; j++){
-            e.n[j] = (a->n[j] * b->n[i] + h) % 10;
-            h = (a->n[j] * b->n[i] + h) / 10;
+            e.n[j] = (a->n[j] * b->n[i] + h) % RADIX;
+            h = (a->n[j] * b->n[i] + h) / RADIX;
         }
         for(int k = i; k > 0; k--){
             mulBy10(&e, &d);
