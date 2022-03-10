@@ -10,6 +10,9 @@ multiple:
 divide:
 	gcc -Wall -o ./divide_test ./unittest/divide_test.c ../mulprec.c ../utils.c -lm
 
+fastdivide:
+	gcc -Wall -o ./fastdivide_test ./unittest/fastdivide_test.c ../mulprec.c ../utils.c -lm
+
 power:
 	gcc -Wall -o ./power_test ./unittest/power_test.c ../mulprec.c ../utils.c -lm
 

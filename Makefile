@@ -1,6 +1,5 @@
+COMPILER=clang
+CFLAGS=-Wall -DPI -O3
 all:
-	gcc -Wall -o a.out check2.c mulprec.c utils.c -lm
-
-unittest:
-	gcc -Wall -o ./test/a.out ./test/unittest/multiple_test.c mulprec.c utils.c -lm
+	$(COMPILER) $(CFLAGS) -o a.out pi.c mulprec.c -lm
 

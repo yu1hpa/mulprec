@@ -7,7 +7,7 @@ int mulprec2Num(struct Number *a){
         else {
             tmp = a->n[i];
             for (int j = i; j > 0; j--) {
-                tmp *= 10;
+                tmp *= RADIX;
             }
         }
         num += tmp;

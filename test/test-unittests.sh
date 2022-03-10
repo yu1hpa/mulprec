@@ -14,6 +14,6 @@ function f(){
 
 $ECHO "$BLUE[*] Execution Unit-Tests $GREY"
 
-unittests=("add" "sub" "multiple" "divide" "power" "fastpower")
+unittests=("add" "sub" "multiple" "divide" "fastdivide" "power" "fastpower")
 f unittests
 rm *_test
